@@ -1,0 +1,38 @@
+.h-center {
+	margin: 0 auto;
+}
+
+.v-center {
+	position: relative;
+	top: 25vh;
+	bottom: 25vh;
+}
+
+.wrapper {
+	width: 100vw;
+	/* background: purple; */
+	min-height: 100vh;
+	overflow-x: hidden;
+}
+
+.joinWrapper {
+	width: 75%;
+	/* background-color: yellow; */
+	padding: 5% 5%;
+}
+
+.inputText {
+	min-height: 30px;
+	border: 2px solid lightgray;
+	padding: 5px;
+}
+/* 
+.text-center {
+	text-align: center;
+} */
+
+@media (min-width: 768px) {
+	.joinWrapper {
+		width: 50%;
+	}
+}
