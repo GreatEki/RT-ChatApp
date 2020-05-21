@@ -11,18 +11,18 @@ const addUser = (id, name, room) => {
 
 	if (existingUser) {
 		return { error: 'Username is taken' };
+	} else {
+		/* If user doesn't exist, save user as new user */
+		const newUser = {
+			id: id,
+			name: name,
+			room: room,
+		};
+
+		users.push(newUser);
+
+		return newUser;
 	}
-
-	/* If user doesn't exist, save user as new user */
-	const newUser = {
-		id,
-		name,
-		room,
-	};
-
-	users.push(newUser);
-
-	return newUser;
 };
 
 const removeUser = (id) => {
@@ -37,7 +37,7 @@ const removeUser = (id) => {
 	users = users.filter((user) => user.id != id);
 };
 
-const getUser = () => {
+const getUser = (id) => {
 	const user = users.find((user) => user.id === id);
 
 	return user;
