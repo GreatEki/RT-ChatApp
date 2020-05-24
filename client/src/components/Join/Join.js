@@ -18,11 +18,11 @@ const Join = () => {
 					chatting
 				</p>
 
-				<div className='text-center p-2 form-group'>
+				<div className='text-center p-2 '>
 					<input
 						type='text'
 						name='username'
-						className='inputText w-100  rounded-pill form-control'
+						className='inputText w-100  rounded-0'
 						placeholder='Enter Username here'
 						onChange={(e) => setName(e.target.value)}
 						value={name}
@@ -40,9 +40,9 @@ const Join = () => {
 					/>
 				</div> */}
 
-				<div className='text-center p-2 form-group'>
+				<div className='text-center p-2'>
 					<select
-						className='w-100 p-2 form-control'
+						className='w-100 p-2 '
 						onChange={(e) => setRoom(e.target.value)}
 						value={room}>
 						<option> Select A Chat Room</option>

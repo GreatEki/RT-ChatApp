@@ -4,13 +4,13 @@ const socketio = require('socket.io');
 const dotenv = require('dotenv');
 const path = require('path');
 
-/* initialise app */
+/* initialise our express app */
 const app = express();
 
 /* Create Server */
 const server = http.createServer(app);
 
-/* sockets  */
+/* creating our socket server  */
 const io = socketio(server);
 
 /* Handling CORS */
@@ -64,6 +64,8 @@ io.on('connection', (socket) => {
 			});
 
 			//broadcast msg to room users from admin
+			/*The broadcast() is used to send messages to all connected users(socketsClients)
+			 except the originating user(socketClients). */
 			socket.broadcast.to(user.room).emit('message', {
 				sender: 'admin',
 				msgContent: `${user.name} has joined the chat`,

@@ -1,0 +1,15 @@
+.chatContainer {
+	display: flex;
+	flex-direction: column;
+	height: 75vh;
+	border: 2px solid lightgray;
+	padding: 5px 5px;
+}
+
+.chatBox {
+	height: 100%;
+}
+
+.infoContainer {
+	background-color: #00acee;
+}

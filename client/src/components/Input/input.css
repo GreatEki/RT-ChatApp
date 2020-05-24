@@ -1,0 +1,16 @@
+.chatInput {
+	min-height: 50px;
+	border: 2px solid #c7d2ed;
+	padding: 5px;
+	width: 80%;
+}
+
+.sendBtn {
+	height: 50px;
+	width: 20%;
+	padding: 5px;
+}
+
+.fa-paper-plane {
+	color: #5d97f5;
+}
