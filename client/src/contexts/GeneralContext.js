@@ -8,6 +8,7 @@ const GeneralContextProvider = (props) => {
 
 	const [userMsg, setUserMsg] = useState('');
 	const [chatMessages, setChatMessages] = useState([]);
+
 	return (
 		<GeneralContext.Provider
 			value={{
@@ -15,6 +16,7 @@ const GeneralContextProvider = (props) => {
 				room,
 				userMsg,
 				chatMessages,
+
 				setUserMsg,
 				setChatMessages,
 				setName,

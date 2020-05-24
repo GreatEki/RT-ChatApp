@@ -1,16 +1,30 @@
+:root {
+	--siteColor: #00acee;
+}
+
 .chatInput {
-	min-height: 50px;
-	border: 2px solid #c7d2ed;
+	min-height: 70px;
+	border-bottom: hidden;
+	border-left: hidden;
+	border-right: hidden;
+	border-top: 0.05px solid var(--siteColor);
 	padding: 5px;
 	width: 80%;
 }
 
+input.chatInput:focus {
+	border-left: hidden;
+	border-bottom: hidden;
+	outline: none;
+}
+
 .sendBtn {
-	height: 50px;
+	height: 70px;
 	width: 20%;
 	padding: 5px;
+	background-color: var(--siteColor);
 }
 
 .fa-paper-plane {
-	color: #5d97f5;
+	color: white;
 }

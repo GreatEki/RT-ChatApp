@@ -5,11 +5,12 @@ import './input.css';
 const Input = ({ sendUserMessage }) => {
 	const { userMsg, setUserMsg } = useContext(GeneralContext);
 	return (
-		<div>
+		<div className='m-0 p-0'>
 			<form>
 				<input
 					type='text'
-					className='d-inline chatInput'
+					className='d-inline chatInput p-2'
+					placeholder='Type a message...'
 					value={userMsg}
 					onChange={(e) => setUserMsg(e.target.value)}
 					onKeyPress={(e) => (e.key === 'Enter' ? sendUserMessage(e) : null)}
@@ -17,7 +18,7 @@ const Input = ({ sendUserMessage }) => {
 
 				<button className='sendBtn d-inline'>
 					{' '}
-					<i className='fas fa-paper-plane'></i> Send{' '}
+					<i className='fas fa-paper-plane mx-1'></i> Send{' '}
 				</button>
 			</form>
 		</div>
