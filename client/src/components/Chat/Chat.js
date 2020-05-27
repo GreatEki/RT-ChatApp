@@ -4,6 +4,7 @@ import { GeneralContext } from '../../contexts/GeneralContext';
 import { server } from '../../config/config';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
+import MessagesArea from '../MessagesArea/MessagesArea';
 
 import './chat.css';
 
@@ -63,6 +64,7 @@ const Chat = () => {
 					</div>
 
 					<div className='chatBox w-100 p-2'>
+						<MessagesArea />
 						<h5 className='text-center'> All chats here </h5>
 					</div>
 					<div className='align-self-end w-100 m-0 p-0'>
