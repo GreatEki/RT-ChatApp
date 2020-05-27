@@ -9,7 +9,7 @@ const Input = ({ sendUserMessage }) => {
 			<form>
 				<input
 					type='text'
-					className='d-inline chatInput p-2'
+					className='d-inline chatInput'
 					placeholder='Type a message...'
 					value={userMsg}
 					onChange={(e) => setUserMsg(e.target.value)}

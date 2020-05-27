@@ -15,22 +15,21 @@ const Message = ({ message: { sender, msgContent } }) => {
 
 	return isSentByCurrentUser ? (
 		<div className='messageContainer justifyEnd'>
-			<div className='userMessageBox'>
-				{/* <p className='userIcon text-right'>
-					{' '}
-					{userName} <i className='fas fa-user '> </i>
-				</p> */}
-				<span className='userText'> {msgContent} </span>
+			<div className='userMessageBox d-flex justify-content-end'>
+				<p className='userText text-justify'> {msgContent} </p>
 			</div>
 		</div>
 	) : (
 		<div className='messageContainer justifyStart'>
-			<div className='groupUserMessageBox'>
+			<div className='groupUserMessageBox d-flex flex-column'>
 				<span className='groupUsersIcon'>
 					{' '}
 					<i className='fas fa-user '> </i> {sender}{' '}
 				</span>
-				<span className='groupUserText'> {msgContent} </span>
+				<span className='groupUserText text-justify text-wrap '>
+					{' '}
+					{msgContent}{' '}
+				</span>
 			</div>
 		</div>
 	);

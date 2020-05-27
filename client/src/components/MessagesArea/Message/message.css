@@ -5,46 +5,73 @@
 }
 
 .groupUserMessageBox {
-	background-color: whitesmoke;
 	font-family: 'Courier New', Courier, monospace;
 	width: 65%;
 	padding: 2px 5px;
 }
 
-.userIcon {
-	font-size: 12px;
-}
-
 .groupUsersIcon {
-	font-size: 12px;
+	font-size: 8px;
 }
 
 .groupUsersIcon i {
 	color: var(--siteColor);
 }
 
-.groupUserMessageBox p {
+.groupUserText {
 	color: var(--siteColor);
+	width: fit-content;
+	background-color: whitesmoke;
+	/* border-radius: 5%; */
+	padding: 5px;
+	border-right-style: groove !important;
+	border-top-left-radius: 0% !important ;
+	border-top-right-radius: 10% !important ;
 }
 
 .userMessageBox {
-	/* display: flex;
-	flex-direction: column; */
-	background-color: var(--siteColor);
-	justify-content: right;
 	width: 65%;
-	padding: 5px 5px;
 	margin-left: 35%;
+	padding-right: 1.5%;
 	border-radius: 2%;
 	font-family: 'Courier New', Courier, monospace;
 	opacity: 0.8;
 }
-
+/* 
 .userIcon {
 	color: white;
 	text-align: right;
-}
+} */
 
 .userText {
+	width: fit-content;
+	padding: 5px;
+	background-color: var(--siteColor);
 	color: whitesmoke;
+	/* border-radius: 5%; */
+	border-right-style: ridge !important;
+	border-top-left-radius: 0% !important ;
+}
+
+/* Media Queries */
+@media (min-width: 100px) and (max-width: 767px) {
+	.groupUserText,
+	.userText {
+		font-size: 12px;
+		padding: 5px;
+		margin-right: 10%;
+		border-right-style: groove !important;
+		border-top-left-radius: 0% !important ;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+	.groupUserText,
+	.userText {
+		font-size: 12px;
+		padding: 5px;
+		margin-right: 10%;
+		border-right-style: groove !important;
+		border-top-left-radius: 0% !important ;
+	}
 }

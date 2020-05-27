@@ -53,19 +53,18 @@ const Chat = () => {
 		}
 	};
 
-	console.log(userMsg, chatMessages);
+	// console.log(userMsg, chatMessages);
 
 	return (
 		<div>
 			<div className='wrapper'>
-				<div className='container  chatContainer mt-5 p-0'>
+				<div className='container-fluid  chatContainer mt-lg-5 p-0'>
 					<div className='align-self-start w-100 infoContainer p-2'>
 						<InfoBar />
 					</div>
 
 					<div className='chatBox w-100 p-2'>
 						<MessagesArea />
-						<h5 className='text-center'> All chats here </h5>
 					</div>
 					<div className='align-self-end w-100 m-0 p-0'>
 						<Input sendUserMessage={sendUserMessage} />
