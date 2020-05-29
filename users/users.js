@@ -26,15 +26,19 @@ const addUser = (id, name, room) => {
 };
 
 const removeUser = (id) => {
-	/* 	//Method 1: To remove user from Users array
+	//Method 1: To remove user from Users array
 	const index = users.findIndex((user) => user.id === id);
 
 	if (index != -1) {
+		//Here we use the splice()method to remove the user and return the user that is removed
 		return users.splice(index, 1)[0];
-	} */
+	}
 
 	// // Method 2: To remove user from users array
-	users = users.filter((user) => user.id != id);
+	// const user = users.filter((user) => user.id !== id);
+
+	// console.log(user);
+	// return user;
 };
 
 const getUser = (id) => {

@@ -19,7 +19,7 @@
 }
 
 .groupUserText {
-	color: var(--siteColor);
+	color: black;
 	width: fit-content;
 	background-color: whitesmoke;
 	/* border-radius: 5%; */

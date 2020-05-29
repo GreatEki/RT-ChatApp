@@ -16,7 +16,9 @@ const Input = ({ sendUserMessage }) => {
 					onKeyPress={(e) => (e.key === 'Enter' ? sendUserMessage(e) : null)}
 				/>
 
-				<button className='sendBtn d-inline'>
+				<button
+					className='sendBtn d-inline'
+					onClick={(e) => sendUserMessage(e)}>
 					{' '}
 					<i className='fas fa-paper-plane mx-1'></i> Send{' '}
 				</button>

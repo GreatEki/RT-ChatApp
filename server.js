@@ -3,15 +3,24 @@ const express = require('express');
 const socketio = require('socket.io');
 const dotenv = require('dotenv');
 const path = require('path');
+const dbConnection = require('./config/database');
 
 /* initialise our express app */
 const app = express();
+
+// BodyParser Middleware
+app.use(express.json());
 
 /* Create Server */
 const server = http.createServer(app);
 
 /* creating our socket server  */
 const io = socketio(server);
+
+dotenv.config({ path: path.resolve(__dirname, './config/config.env') });
+
+// Connect to Database
+dbConnection();
 
 /* Handling CORS */
 
@@ -34,7 +43,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use('/', require('./router/router'));
+app.use('/api', require('./api/router/router'));
 
 const {
 	addUser,
@@ -92,12 +101,18 @@ io.on('connection', (socket) => {
 
 	socket.on('disconnect', () => {
 		console.log('user has left');
+		const user = removeUser(socket.id);
+
+		if (user) {
+			io.to(user.room).emit('message', {
+				sender: 'admin',
+				msgContent: `${user.name} has disconnected`,
+			});
+		}
 	});
 });
 
 const PORT = process.env.PORT || 5000;
-
-dotenv.config({ path: path.resolve(__dirname, './config/config.env') });
 
 server.listen(PORT, () =>
 	console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)

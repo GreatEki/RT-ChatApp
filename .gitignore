@@ -4,4 +4,4 @@
 
 /client/src/config/*
 
-/config
+/config/config.env
