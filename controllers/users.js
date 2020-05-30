@@ -52,3 +52,31 @@ exports.addUser = async (req, res) => {
 		console.log(err);
 	}
 };
+
+// DESC: Funtion to find user;
+// URL: /api/users/:id
+exports.getOneUser = async (req, res) => {
+	try {
+		const id = req.params.id;
+
+		const user = await User.findById(id);
+
+		if (!user) {
+			return res.status(404).json({
+				success: false,
+				message: 'User not found',
+			});
+		} else {
+			return res.status(200).json({
+				success: true,
+				message: 'User Found',
+				user,
+			});
+		}
+	} catch (err) {
+		return res.status(500).json({
+			success: false,
+			error: err,
+		});
+	}
+};
