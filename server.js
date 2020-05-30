@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use('api/users', require('./router/router'));
+app.use('/api', require('./api/routes/userRoutes'));
 
 const {
 	addUser,
