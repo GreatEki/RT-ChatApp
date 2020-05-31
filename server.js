@@ -47,9 +47,8 @@ app.use('/api', require('./api/routes/userRoutes'));
 
 const {
 	addUser,
-	removeUser,
+
 	getUser,
-	getUsersInRoom,
 } = require('./users/users');
 
 io.on('connection', (socket) => {
@@ -59,6 +58,7 @@ io.on('connection', (socket) => {
 		Listens for request to join a chat*/
 	socket.on('join', ({ name, room }, callback) => {
 		const user = addUser(socket.id, name, room);
+		console.log(user);
 
 		// console.log(user);
 		if (!user) {
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
 		callback();
 	});
 
-	socket.on('disconnect', () => {
+	/* socket.on('disconnect', () => {
 		console.log('user has left');
 		const user = removeUser(socket.id);
 
@@ -109,7 +109,7 @@ io.on('connection', (socket) => {
 				msgContent: `${user.name} has disconnected`,
 			});
 		}
-	});
+	}); */
 });
 
 const PORT = process.env.PORT || 5000;

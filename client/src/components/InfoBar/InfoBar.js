@@ -13,7 +13,7 @@ const InfoBar = () => {
 				</section>
 
 				<section className='p-2'>
-					<h5 className='text-white'> RT-CHAT</h5>
+					<h5 className='logo text-white'> RT-CHAT</h5>
 				</section>
 				<section className='closeBtn p-2'>
 					<Link to='/join' className='text-white'>

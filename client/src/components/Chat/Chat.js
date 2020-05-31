@@ -7,6 +7,7 @@ import Input from '../Input/Input';
 import MessagesArea from '../MessagesArea/MessagesArea';
 
 import './chat.css';
+import GroupList from '../GroupList/GroupList';
 
 let socket;
 
@@ -63,8 +64,13 @@ const Chat = () => {
 						<InfoBar />
 					</div>
 
-					<div className='chatBox w-100 p-2'>
-						<MessagesArea />
+					<div className='chatBox w-100'>
+						<div className='GroupList'>
+							<GroupList />
+						</div>
+						<div className='MessageArea'>
+							<MessagesArea />
+						</div>
 					</div>
 					<div className='align-self-end w-100 m-0 p-0'>
 						<Input sendUserMessage={sendUserMessage} />

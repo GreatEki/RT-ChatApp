@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+:root {
+	--Roboto: Roboto, sans-serif;
+	--lightGrey: #c7c3c3;
+}
+.contactListBox {
+	display: block;
+
+	padding: 10px 0;
+	/* padding: 20px; */
+}
+
+.fa-search {
+	height: 3em;
+	background-color: whitesmoke;
+}
+
+.listSearch {
+	height: 3em;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	outline: none;
+}
+
+.listSearch:focus {
+	outline: none;
+}
+.contactListBox > a > li {
+	/* display: block; */
+	list-style: none;
+	padding: 15px 10px;
+	font-family: var(--Roboto);
+	font-size: 18px;
+	border-bottom: 1px solid var(--lightGrey);
+	color: var(--siteColor);
+	text-align: center;
+}
+
+.contactListLink:hover {
+	text-decoration: none;
+}
+
+.contactListLink > li:hover {
+	background-color: var(--siteColor);
+	color: white;
+}

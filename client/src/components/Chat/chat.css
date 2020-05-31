@@ -14,7 +14,20 @@
 
 .chatBox {
 	height: 65vh;
+	display: flex;
+	flex-direction: row;
+	/* background-color: whitesmoke; */
 	/* background-color: lightslategray; */
+}
+
+.GroupList {
+	width: 20vw;
+	border-bottom: 1px solid var(--lightGrey);
+}
+
+.MessageArea {
+	width: 80vw;
+	border: 1px solid var(--lightGrey);
 }
 
 .infoContainer {

@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Join from './components/Join/Join';
 import Chat from './components/Chat/Chat';
+import Register from './components/Register/Register';
 import GeneralContextProvider from './contexts/GeneralContext';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 						<Route exact path='/' component={Home} />
 						<Route exact path='/join' component={Join} />
 						<Route exact path='/chat' component={Chat} />
+						<Route exact path='/register' component={Register} />
 					</GeneralContextProvider>
 				</Switch>
 			</BrowserRouter>

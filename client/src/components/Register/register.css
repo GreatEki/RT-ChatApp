@@ -1,0 +1,34 @@
+.logo {
+	color: var(--siteColor);
+	padding: 10px;
+	font-family: Lucida Calligraphy;
+	font-size: 32px;
+	/* margin: 15% 0 0 0; */
+}
+
+.registerBox {
+	padding: 0 !important;
+}
+
+.registerForm {
+	margin: 0 !important;
+	padding: 2em;
+}
+
+.registerInput {
+	width: 75%;
+	height: 2.2em !important;
+	outline: none;
+	padding: 1.2em;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #c7c3c3;
+}
+
+.siteBtn {
+	background-color: var(--siteColor);
+	padding: 0.5em;
+	margin-top: 1.5em;
+	color: white;
+}
