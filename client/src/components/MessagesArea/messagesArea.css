@@ -1,8 +1,7 @@
 .messageArea {
-	max-height: 100%;
-	/* background-color: thistle; */
+	max-height: 55vh;
 }
 
-.scrollable-child {
+.scrollable {
 	overflow-y: auto;
 }

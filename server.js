@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 		Listens for request to join a chat*/
 	socket.on('join', ({ name, room }, callback) => {
 		const user = addUser(socket.id, name, room);
-		console.log(user);
+		// console.log(user);
 
 		// console.log(user);
 		if (!user) {

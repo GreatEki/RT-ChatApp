@@ -28,7 +28,6 @@
 	outline: none;
 }
 .contactListBox > a > li {
-	/* display: block; */
 	list-style: none;
 	padding: 15px 10px;
 	font-family: var(--Roboto);

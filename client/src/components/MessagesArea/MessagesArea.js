@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import React, { useContext, useEffect } from 'react';
 import { GeneralContext } from '../../contexts/GeneralContext';
 import Message from './Message/Message';
 
@@ -9,14 +8,14 @@ const MessagesArea = () => {
 	const { chatMessages, name } = useContext(GeneralContext);
 
 	return (
-		<ScrollToBottom className='messageArea scrollable-child'>
+		<div className='messageArea scrollable'>
 			{chatMessages.map((message, i) => (
 				<div key={i}>
 					{' '}
 					<Message message={message} />{' '}
 				</div>
 			))}
-		</ScrollToBottom>
+		</div>
 	);
 };
 

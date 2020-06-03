@@ -1,6 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { GeneralContext } from '../../contexts/GeneralContext';
+import { StyleContext } from '../../contexts/StyleContext';
+
 import { server } from '../../config/config';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
@@ -20,6 +23,8 @@ const Chat = () => {
 		chatMessages,
 		setChatMessages,
 	} = useContext(GeneralContext);
+
+	// const { styles, seeChatList } = useContext(StyleContext);
 
 	//This useEffect() handles the general joining and disconnection of a user to and from a room
 	useEffect(() => {
@@ -65,11 +70,12 @@ const Chat = () => {
 					</div>
 
 					<div className='chatBox w-100'>
-						<div className='GroupList'>
-							<GroupList />
-						</div>
-						<div className='MessageArea'>
-							<MessagesArea />
+						<div>
+							<Link to='/chat-list' className=' w-100'>
+								<i className='fas fa-arrow-left p-2'> Back to Chats</i>
+							</Link>
+
+							<MessagesArea className='MessageArea' />
 						</div>
 					</div>
 					<div className='align-self-end w-100 m-0 p-0'>

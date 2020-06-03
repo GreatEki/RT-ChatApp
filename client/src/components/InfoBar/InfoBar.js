@@ -5,7 +5,7 @@ import { GeneralContext } from '../../contexts/GeneralContext';
 const InfoBar = () => {
 	const { name } = useContext(GeneralContext);
 	return (
-		<div>
+		<div className='infoContainer'>
 			<div className='d-flex flex-row justify-content-between '>
 				<section className='accountName p-2'>
 					<i className='fas fa-user text-white p-2'></i>

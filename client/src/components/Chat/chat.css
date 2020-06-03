@@ -15,27 +15,41 @@
 .chatBox {
 	height: 65vh;
 	display: flex;
-	flex-direction: row;
-	/* background-color: whitesmoke; */
-	/* background-color: lightslategray; */
+	flex-direction: column;
 }
 
-.GroupList {
+/* .GroupList-Flex {
 	width: 20vw;
 	border-bottom: 1px solid var(--lightGrey);
 }
+*/
 
-.MessageArea {
+/* .MessageArea {
 	width: 80vw;
 	border: 1px solid var(--lightGrey);
-}
+} */
 
 .infoContainer {
 	background-color: #00acee;
 }
 
 /* Media Queries  */
-@media (min-width: 100px) and (max-width: 767px) {
+/* SMALL SCREENS: PHONES */
+@media (min-width: 100px) and (max-width: 575px) {
+	.chatContainer {
+		min-height: 100vh;
+		max-width: 100vw;
+	}
+
+	.chatBox {
+		height: 88vh;
+		display: flex;
+		flex-direction: column;
+	}
+}
+/* Media Queries  */
+/* SMALL SCREENS: BIGGER PHONES */
+@media (min-width: 576px) and (max-width: 767px) {
 	.chatContainer {
 		min-height: 100vh;
 		max-width: 100vw;
@@ -47,6 +61,7 @@
 }
 
 /* Media Queries  */
+/* MEDIUM SCREENS: Tablets and Ipads */
 @media (min-width: 768px) and (max-width: 1023px) {
 	.chatContainer {
 		margin-top: 2% !important;

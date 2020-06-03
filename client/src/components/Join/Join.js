@@ -55,10 +55,10 @@ const Join = () => {
 				</div>
 
 				<Link
-					to={`/chat`}
+					to={`/chat-list`}
 					className='text-center my-4'
 					onClick={(e) => (!name || !room ? e.preventDefault() : null)}>
-					<button className='h-center btn-block btn-success w-25 p-1'>
+					<button className='h-center btn-block siteBtn w-25 p-1'>
 						{' '}
 						Enter{' '}
 					</button>
