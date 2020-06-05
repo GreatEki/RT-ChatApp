@@ -8,9 +8,6 @@ const dbConnection = require('./config/database');
 /* initialise our express app */
 const app = express();
 
-// BodyParser Middleware
-app.use(express.json());
-
 /* Create Server */
 const server = http.createServer(app);
 
@@ -22,6 +19,8 @@ dotenv.config({ path: path.resolve(__dirname, './config/config.env') });
 // Connect to Database
 dbConnection();
 
+// BodyParser Middleware
+app.use(express.json());
 /* Handling CORS */
 
 app.use((req, res, next) => {
@@ -37,19 +36,13 @@ app.use((req, res, next) => {
 	// Allow Access for Request Methods
 	if (req.method === 'OPTIONS') {
 		res.header('Access-Control-Allow-Methods', 'POST, PUT, PATCH, GET, DELETE');
-		res.status(200).json({});
 	}
 
 	next();
 });
 
+app.use('/api/auth', require('./api/routes/authRoutes'));
 app.use('/api', require('./api/routes/userRoutes'));
-
-const {
-	addUser,
-
-	getUser,
-} = require('./users/users');
 
 io.on('connection', (socket) => {
 	console.log('We have a new connection');

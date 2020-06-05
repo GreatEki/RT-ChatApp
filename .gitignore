@@ -5,3 +5,5 @@
 /client/src/config/*
 
 /config/config.env
+
+/config/config.js

@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import { GeneralContext } from '../../contexts/GeneralContext';
-import { StyleContext } from '../../contexts/StyleContext';
 
 import { server } from '../../config/config';
 import InfoBar from '../InfoBar/InfoBar';
@@ -10,7 +9,6 @@ import Input from '../Input/Input';
 import MessagesArea from '../MessagesArea/MessagesArea';
 
 import './chat.css';
-import GroupList from '../GroupList/GroupList';
 
 let socket;
 

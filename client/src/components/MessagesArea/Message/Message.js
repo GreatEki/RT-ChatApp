@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './message.css';
 import { GeneralContext } from '../../../contexts/GeneralContext';
 

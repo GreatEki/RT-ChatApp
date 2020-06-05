@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyleContext } from '../../contexts/StyleContext';
 import InfoBar from '../InfoBar/InfoBar';
 
 import './grouplist.css';
 
 const GroupList = () => {
-	const { selectChat } = useContext(StyleContext);
 	return (
 		<div className='container p-1'>
 			<div>

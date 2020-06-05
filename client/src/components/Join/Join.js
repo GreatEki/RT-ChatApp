@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 
 import './join.css';
 import { GeneralContext } from '../../contexts/GeneralContext';
-import { sign } from 'jsonwebtoken';
 
 const Join = () => {
-	const { name, user, handleInput, signIn, errMsgs, authMsgs } = useContext(
+	const { user, handleInput, signIn, errMsgs, authMsgs } = useContext(
 		GeneralContext
 	);
 
@@ -14,8 +12,11 @@ const Join = () => {
 		<div className='wrapper'>
 			<div className='h-center v-center joinWrapper'>
 				{errMsgs.length > 0 ? (
-					errMsgs.map((msg) => (
-						<p className='text-danger text-center'> {msg} </p>
+					errMsgs.map((msg, index) => (
+						<p className='text-danger text-center' key={index}>
+							{' '}
+							{msg}{' '}
+						</p>
 					))
 				) : (
 					<small className='text-danger text-success'> {authMsgs} </small>
@@ -31,11 +32,11 @@ const Join = () => {
 				<div className='text-center p-2 '>
 					<input
 						type='text'
-						name='username'
+						name='userName'
 						className='inputText w-100  rounded-0'
-						placeholder='Enter Username here'
+						placeholder='Enter username here'
 						onChange={(e) => handleInput(e)}
-						value={user.username}
+						value={user.userName}
 					/>
 				</div>
 

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { GeneralContext } from '../../contexts/GeneralContext';
 import Message from './Message/Message';
 
 import './messagesArea.css';
 
 const MessagesArea = () => {
-	const { chatMessages, name } = useContext(GeneralContext);
+	const { chatMessages } = useContext(GeneralContext);
 
 	return (
 		<div className='messageArea scrollable'>

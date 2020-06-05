@@ -7,7 +7,7 @@ export const GeneralContext = createContext();
 
 const GeneralContextProvider = (props) => {
 	const [user, setUser] = useState({
-		username: '',
+		userName: '',
 		password: '',
 	});
 	const [room, setRoom] = useState('');
@@ -32,10 +32,10 @@ const GeneralContextProvider = (props) => {
 	};
 
 	const validateInput = (user) => {
-		const { username, password } = user;
+		const { userName, password } = user;
 		let error = {};
-		if (!username || username.length === '') {
-			error.username = 'Please enter your username or email';
+		if (!userName || userName.length === '') {
+			error.userName = 'Please enter your username or email';
 		}
 
 		if (!password || password.length === '') {
@@ -65,7 +65,11 @@ const GeneralContextProvider = (props) => {
 				return errMsgs;
 			} else {
 				setAllowFormSubmission(true);
-				const res = await Axios.post(`${ENDPOINT}/auth/sign-in`, config, user);
+				const res = await Axios.post(
+					`${ENDPOINT}/api/auth/login`,
+					user,
+					config
+				);
 
 				setVerifiedUser({
 					id: res.data.user._id,
@@ -78,6 +82,7 @@ const GeneralContextProvider = (props) => {
 				history.push('/chat-list');
 			}
 		} catch (err) {
+			console.log(err.response);
 			const errResp = err.response.data;
 
 			setAuthMsgs(errResp.message);
@@ -98,7 +103,7 @@ const GeneralContextProvider = (props) => {
 				signIn,
 				setUserMsg,
 				setChatMessages,
-
+				verifiedUser,
 				setRoom,
 			}}>
 			{props.children}
