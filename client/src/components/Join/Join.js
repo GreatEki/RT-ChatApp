@@ -3,13 +3,23 @@ import { Link } from 'react-router-dom';
 
 import './join.css';
 import { GeneralContext } from '../../contexts/GeneralContext';
+import { sign } from 'jsonwebtoken';
 
 const Join = () => {
-	const { name, room, setName, setRoom } = useContext(GeneralContext);
+	const { name, user, handleInput, signIn, errMsgs, authMsgs } = useContext(
+		GeneralContext
+	);
 
 	return (
 		<div className='wrapper'>
 			<div className='h-center v-center joinWrapper'>
+				{errMsgs.length > 0 ? (
+					errMsgs.map((msg) => (
+						<p className='text-danger text-center'> {msg} </p>
+					))
+				) : (
+					<small className='text-danger text-success'> {authMsgs} </small>
+				)}
 				<h1 className='text-center'> JOIN RT_CHAT </h1>
 
 				<p className='text-center'>
@@ -24,8 +34,8 @@ const Join = () => {
 						name='username'
 						className='inputText w-100  rounded-0'
 						placeholder='Enter Username here'
-						onChange={(e) => setName(e.target.value)}
-						value={name}
+						onChange={(e) => handleInput(e)}
+						value={user.username}
 					/>
 				</div>
 
@@ -40,7 +50,7 @@ const Join = () => {
 					/>
 				</div> */}
 
-				<div className='text-center p-2'>
+				{/* <div className='text-center p-2'>
 					<select
 						className='w-100 p-2 '
 						onChange={(e) => setRoom(e.target.value)}
@@ -53,16 +63,24 @@ const Join = () => {
 						<option value='Dev-Ops'> Dev-Ops</option>
 					</select>
 				</div>
+ */}
+				<div className='text-center p-2 '>
+					<input
+						type='password'
+						name='password'
+						className='inputText w-100  rounded-0'
+						placeholder='Password'
+						onChange={(e) => handleInput(e)}
+						value={user.password}
+					/>
+				</div>
 
-				<Link
-					to={`/chat-list`}
-					className='text-center my-4'
-					onClick={(e) => (!name || !room ? e.preventDefault() : null)}>
-					<button className='h-center btn-block siteBtn w-25 p-1'>
-						{' '}
-						Enter{' '}
-					</button>
-				</Link>
+				<button
+					onClick={(e) => signIn(e, user)}
+					className='h-center btn-block siteBtn w-25 p-1'>
+					{' '}
+					Enter{' '}
+				</button>
 			</div>
 		</div>
 	);

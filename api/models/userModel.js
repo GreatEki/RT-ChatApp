@@ -24,6 +24,11 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
+
+	contacts: {
+		type: Array,
+		default: [],
+	},
 });
 
 const User = mongoose.model('User', userSchema);
