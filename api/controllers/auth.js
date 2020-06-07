@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 // DESC: Authenticates User
 // URL: '/auth/login'
 // REQUEST TYPE: POST
-exports.login = async (req, res, next) => {
+const login = async (req, res) => {
 	try {
 		const { userName, password } = req.body;
 
@@ -59,3 +59,60 @@ exports.login = async (req, res, next) => {
 		});
 	}
 };
+
+// DESC: Registers a new User
+// URL: /auth/create-account
+// REQUEST: POST
+const addUser = async (req, res) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			email,
+			userName,
+			password,
+			contacts,
+		} = req.body;
+
+		const existingUser = await User.find({ email });
+
+		if (existingUser.length > 0) {
+			return res.status(400).json({
+				success: false,
+				message: 'User profile already in use',
+			});
+		} else {
+			//save the user
+
+			const newUser = new User({
+				firstName,
+				lastName,
+				email,
+				userName,
+				password,
+				contacts,
+			});
+
+			// hash the password
+
+			const hash = await bcrypt.hash(newUser.password, 10);
+
+			newUser.password = hash;
+
+			const savedUser = await User.create(newUser);
+
+			return res.status(201).json({
+				success: true,
+				message: 'User saved successfully',
+				user: savedUser,
+			});
+		}
+	} catch (err) {
+		return res.status(500).json({
+			success: false,
+			message: err.message,
+		});
+	}
+};
+
+module.exports = { login, addUser };

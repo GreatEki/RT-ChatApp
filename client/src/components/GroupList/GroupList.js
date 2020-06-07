@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import InfoBar from '../InfoBar/InfoBar';
+import { GeneralContext } from '../../contexts/GeneralContext';
+import { ContactsContext } from '../../contexts/ContactsContext';
 
 import './grouplist.css';
 
 const GroupList = () => {
+	const { verifiedUser } = useContext(GeneralContext);
+	const {
+		addNewContact,
+		setSearchVal,
+		searchVal,
+		searchForContacts,
+		gotoSearch,
+	} = useContext(ContactsContext);
+
 	return (
 		<div className='container p-1'>
 			<div>
@@ -13,8 +24,13 @@ const GroupList = () => {
 					<i className='fas fa-search p-3 '> </i>
 					<input
 						type='text'
+						onChange={(e) => setSearchVal(e.target.value)}
+						value={searchVal}
+						onKeyPress={(e) =>
+							e.key === 'Enter' ? gotoSearch(e, searchVal) : null
+						}
 						className='listSearch'
-						placeholder='Search Group Here'
+						placeholder='Search for Friends and Groups Here'
 					/>
 				</div>
 				<ul className='contactListBox'>

@@ -2,12 +2,19 @@ const express = require('express');
 
 const router = express.Router();
 
-const { addUser, getUsers, getUser } = require('../controllers/users');
+const {
+	getUsers,
+	getUser,
+	addContact,
+	searchForcontacts,
+} = require('../controllers/users');
 
-router.route('/users/create-account').post(addUser);
+router.route('/:id').get(getUser);
 
-router.route('/users/:id').get(getUser);
+router.route('/add-contact/:id').post(addContact);
 
-router.route('/users').get(getUsers);
+router.route('/search/:value').get(searchForcontacts);
+
+router.route('/').get(getUsers);
 
 module.exports = router;

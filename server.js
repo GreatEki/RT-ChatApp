@@ -42,68 +42,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', require('./api/routes/authRoutes'));
-app.use('/api', require('./api/routes/userRoutes'));
-
-io.on('connection', (socket) => {
-	console.log('We have a new connection');
-
-	/*  Handling Users joining a chat room
-		Listens for request to join a chat*/
-	socket.on('join', ({ name, room }, callback) => {
-		const user = addUser(socket.id, name, room);
-		// console.log(user);
-
-		// console.log(user);
-		if (!user) {
-			return callback({ error });
-		} else {
-			/* If no errors allow user join chat room  */
-
-			// emit msg to User from admin
-			socket.emit('message', {
-				sender: 'admin',
-				msgContent: `${user.name} welcome to ${user.room}`,
-			});
-
-			//broadcast msg to room users from admin
-			/*The broadcast() is used to send messages to all connected users(socketsClients)
-			 except the originating user(socketClients). */
-			socket.broadcast.to(user.room).emit('message', {
-				sender: 'admin',
-				msgContent: `${user.name} has joined the chat`,
-			});
-
-			socket.join(user.room);
-
-			callback();
-		}
-	});
-	/* End of Handling Users joining a chat room */
-
-	/* Listens to client messages  */
-	socket.on('clientMessage', (userMsg, callback) => {
-		const user = getUser(socket.id);
-
-		io.to(user.room).emit('message', {
-			sender: user.name,
-			msgContent: userMsg,
-		});
-
-		callback();
-	});
-
-	/* socket.on('disconnect', () => {
-		console.log('user has left');
-		const user = removeUser(socket.id);
-
-		if (user) {
-			io.to(user.room).emit('message', {
-				sender: 'admin',
-				msgContent: `${user.name} has disconnected`,
-			});
-		}
-	}); */
-});
+app.use('/api/users', require('./api/routes/userRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
