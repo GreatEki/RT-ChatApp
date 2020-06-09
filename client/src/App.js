@@ -21,7 +21,7 @@ function App() {
 							<StyleContextProvider>
 								<Route exact path='/' component={Home} />
 								<Route exact path='/join' component={Join} />
-								<Route exact path='/chat' component={Chat} />
+								<Route exact path='/chat/:id' component={Chat} />
 								<Route exact path='/chat-list' component={GroupList} />
 								<Route
 									exact

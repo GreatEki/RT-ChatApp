@@ -21,9 +21,12 @@ const GeneralContextProvider = (props) => {
 	const [allowFormSubmission, setAllowFormSubmission] = useState(false);
 	const [authMsgs, setAuthMsgs] = useState('');
 
+	const [userContacts, setUserContacts] = useState([]);
+
 	const { ENDPOINT } = server;
 	let history = useHistory();
 
+	// handles the Login Input fields in Join Component
 	const handleInput = (e) => {
 		setUser({
 			...user,
@@ -31,6 +34,7 @@ const GeneralContextProvider = (props) => {
 		});
 	};
 
+	// validates our Login Fields in Join Component
 	const validateInput = (user) => {
 		const { userName, password } = user;
 		let error = {};
@@ -45,6 +49,7 @@ const GeneralContextProvider = (props) => {
 		return error;
 	};
 
+	// Handles the front end Login functionality in Join Component
 	const signIn = async (e, user) => {
 		e.preventDefault();
 
@@ -71,18 +76,23 @@ const GeneralContextProvider = (props) => {
 					config
 				);
 
+				const userInfo = res.data.user;
+				// console.log(userInfo._id);
+
 				setVerifiedUser({
-					id: res.data.user._id,
-					firstName: res.data.user.firstname,
-					lastName: res.data.user.lastName,
-					email: res.data.user.email,
+					id: userInfo._id,
+					firstName: userInfo.firstname,
+					lastName: userInfo.lastName,
+					email: userInfo.email,
 					token: res.data.token,
 				});
+
+				setUserContacts(userInfo.contacts);
 
 				history.push('/chat-list');
 			}
 		} catch (err) {
-			console.log(err.response);
+			// console.log(err.response);
 			const errResp = err.response.data;
 
 			setAuthMsgs(errResp.message);
@@ -99,6 +109,7 @@ const GeneralContextProvider = (props) => {
 				errMsgs,
 				authMsgs,
 				allowFormSubmission,
+				userContacts,
 				handleInput,
 				signIn,
 				setUserMsg,

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import { server } from '../config/config';
@@ -44,11 +44,12 @@ const ContactsContextProvider = (props) => {
 		};
 
 		const res = await Axios.post(
-			`${ENDPOINT}/api/users/${userId}`,
+			`${ENDPOINT}/api/users/contacts/${userId}`,
 			contact,
 			config
 		);
 	};
+
 	return (
 		<ContactsContext.Provider
 			value={{

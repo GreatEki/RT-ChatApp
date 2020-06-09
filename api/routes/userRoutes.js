@@ -11,7 +11,7 @@ const {
 
 router.route('/:id').get(getUser);
 
-router.route('/add-contact/:id').post(addContact);
+router.route('/contacts/:id').post(addContact);
 
 router.route('/search/:value').get(searchForcontacts);
 

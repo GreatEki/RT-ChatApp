@@ -61,7 +61,7 @@ const addContact = async (req, res) => {
 		console.log(newContact);
 
 		const response = await User.findOneAndUpdate(
-			{ firstName: currentUserId },
+			{ _id: currentUserId },
 			{ $push: { contacts: newContact } }
 		);
 
@@ -95,6 +95,7 @@ const searchForcontacts = async (req, res) => {
 				success: true,
 				contacts: contacts.map((person) => {
 					return {
+						id: person._id,
 						firstname: person.firstName,
 						lastname: person.lastName,
 						username: person.userName,
@@ -115,4 +116,9 @@ const searchForcontacts = async (req, res) => {
 	}
 };
 
-module.exports = { getUsers, getUser, addContact, searchForcontacts };
+module.exports = {
+	getUsers,
+	getUser,
+	addContact,
+	searchForcontacts,
+};

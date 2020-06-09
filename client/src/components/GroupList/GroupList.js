@@ -7,7 +7,7 @@ import { ContactsContext } from '../../contexts/ContactsContext';
 import './grouplist.css';
 
 const GroupList = () => {
-	const { verifiedUser } = useContext(GeneralContext);
+	const { verifiedUser, userContacts } = useContext(GeneralContext);
 	const {
 		addNewContact,
 		setSearchVal,
@@ -15,6 +15,9 @@ const GroupList = () => {
 		searchForContacts,
 		gotoSearch,
 	} = useContext(ContactsContext);
+
+	const { id } = verifiedUser;
+	console.log(id);
 
 	return (
 		<div className='container p-1'>
@@ -33,23 +36,16 @@ const GroupList = () => {
 						placeholder='Search for Friends and Groups Here'
 					/>
 				</div>
-				<ul className='contactListBox'>
-					<Link to='/chat' className='contactListLink'>
-						<li> Padi4Jungle</li>
-					</Link>
-					<Link to='/chat' className='contactListLink'>
-						<li> World Leaders Forum</li>
-					</Link>
-					<Link to='/chat' className='contactListLink'>
-						<li> Soccerr Group</li>
-					</Link>
-					<Link to='/chat' className='contactListLink'>
-						<li> Electricity Chat</li>
-					</Link>
-					<Link to='/chat' className='contactListLink'>
-						<li> Political Forum</li>
-					</Link>
-				</ul>
+
+				{userContacts.map((contact, index) => {
+					return (
+						<ul className='contactListBox' key={index}>
+							<Link to={`/chat/${contact.id}`} className='contactListLink'>
+								<li> {contact.username}</li>
+							</Link>
+						</ul>
+					);
+				})}
 			</div>
 		</div>
 	);

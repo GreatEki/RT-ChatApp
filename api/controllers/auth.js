@@ -10,7 +10,7 @@ const login = async (req, res) => {
 	try {
 		const { userName, password } = req.body;
 
-		//Check if email is valid
+		//Check if email/username is valid
 		const user = await User.findOne({
 			$or: [{ userName }, { email: userName }],
 		});

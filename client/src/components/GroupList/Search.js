@@ -35,10 +35,14 @@ const Search = () => {
 					/>
 				</div>
 
+				<Link to='/chat-list' className=' w-100 p-2'>
+					<i className='fas fa-arrow-left p-2'> Back to Chats</i>
+				</Link>
+
 				{searchRes.length > 0 ? (
 					searchRes.map((person, index) => (
 						<ul className='contactListBox' key={index}>
-							<Link to='/chat' className='contactListLink'>
+							<Link to={`/chat/${person.id}`} className='contactListLink'>
 								<li> {person.username} </li>
 							</Link>
 						</ul>
