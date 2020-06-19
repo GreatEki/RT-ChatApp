@@ -24,7 +24,13 @@ const GeneralContextProvider = (props) => {
 	const [userContacts, setUserContacts] = useState([]);
 	const [isContact, setIsContact] = useState(false);
 	const [modal, setModal] = useState(false);
-	const [foundContact, setFoundContact] = useState({});
+	const [foundContact, setFoundContact] = useState({
+		id: '',
+		firstName: '',
+		lastName: '',
+		userName: '',
+		email: '',
+	});
 
 	const { ENDPOINT } = server;
 	let history = useHistory();
@@ -125,25 +131,30 @@ const GeneralContextProvider = (props) => {
 
 	//This methods checks if a chat user is a contact of the verifiedUser
 	const checkIfContact = (id) => {
-		userContacts.map((contact) => {
-			if (id === contact.id) {
-				setIsContact(true);
-				setModal(false);
-				// console.log(id);
-			} else {
-				setIsContact(false);
-				setModal(true);
-			}
-		});
+		try {
+			userContacts.map((contact) => {
+				if (id === contact.id) {
+					setIsContact(true);
+					setModal(false);
+					// console.log(id);
+				} else {
+					setIsContact(false);
+					setModal(true);
+				}
+			});
+		} catch (err) {
+			console.log(err.message);
+		}
 	};
 
 	const getContactInfo = async (id) => {
 		try {
 			const res = await Axios.get(`${ENDPOINT}/api/users/${id}`);
 
-			const { email, firstName, lastName, userName } = res.data.user;
+			const { _id, email, firstName, lastName, userName } = res.data.user;
 
 			const contact = {
+				id: _id,
 				firstName,
 				lastName,
 				userName,
@@ -182,6 +193,7 @@ const GeneralContextProvider = (props) => {
 				modal,
 				setModal,
 				getContactInfo,
+				foundContact,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>

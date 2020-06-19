@@ -30,12 +30,7 @@ const Chat = (props) => {
 
 	useEffect(() => {
 		checkIfContact(chatId);
-		async function fetchContactInfo() {
-			await getContactInfo(chatId);
-			// console.log(contactInfo);
-		}
-
-		fetchContactInfo();
+		getContactInfo(chatId);
 
 		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isContact]);
@@ -83,7 +78,7 @@ const Chat = (props) => {
 						<InfoBar />
 					</div>
 
-					{!isContact ? <AddAsContactModal /> : <div> </div>}
+					{!isContact ? <AddAsContactModal chatId={chatId} /> : <div> </div>}
 
 					<div className='chatBox w-100'>
 						<div>
