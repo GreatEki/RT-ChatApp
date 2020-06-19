@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { GeneralContext } from '../../contexts/GeneralContext';
 
 const InfoBar = () => {
-	const { name } = useContext(GeneralContext);
+	const { name, signOutUser } = useContext(GeneralContext);
 	return (
 		<div className='infoContainer'>
 			<div className='d-flex flex-row justify-content-between '>
@@ -15,11 +15,11 @@ const InfoBar = () => {
 				<section className='p-2'>
 					<h5 className='logo text-white'> RT-CHAT</h5>
 				</section>
-				<section className='closeBtn p-2'>
-					<Link to='/join' className='text-white'>
+				<section className='closeBtn p-2 '>
+					<div className='bg-danger p-2' onClick={() => signOutUser()}>
 						{' '}
-						&times;
-					</Link>
+						<span className='text-white'> &times; </span>
+					</div>
 				</section>
 			</div>
 		</div>

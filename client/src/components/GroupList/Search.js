@@ -14,7 +14,6 @@ const Search = () => {
 
 	useEffect(() => {
 		searchForContacts(searchVal);
-
 		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchVal]);
 	return (
@@ -39,17 +38,20 @@ const Search = () => {
 					<i className='fas fa-arrow-left p-2'> Back to Chats</i>
 				</Link>
 
-				{searchRes.length > 0 ? (
-					searchRes.map((person, index) => (
-						<ul className='contactListBox' key={index}>
-							<Link to={`/chat/${person.id}`} className='contactListLink'>
+				<ul className='contactListBox'>
+					{searchRes.length > 0 ? (
+						searchRes.map((person, index) => (
+							<Link
+								to={`/chat/${person.id}`}
+								key={index}
+								className='contactListLink'>
 								<li> {person.username} </li>
 							</Link>
-						</ul>
-					))
-				) : (
-					<div className='text-center'> No resuts for {searchVal} </div>
-				)}
+						))
+					) : (
+						<div className='text-center'> No resuts for {searchVal} </div>
+					)}
+				</ul>
 			</div>
 		</div>
 	);

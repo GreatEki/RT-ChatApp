@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import InfoBar from '../InfoBar/InfoBar';
 import { GeneralContext } from '../../contexts/GeneralContext';
@@ -7,7 +7,9 @@ import { ContactsContext } from '../../contexts/ContactsContext';
 import './grouplist.css';
 
 const GroupList = () => {
-	const { verifiedUser, userContacts } = useContext(GeneralContext);
+	const { verifiedUser, userContacts, getLoggedInUser } = useContext(
+		GeneralContext
+	);
 	const {
 		addNewContact,
 		setSearchVal,
@@ -16,8 +18,11 @@ const GroupList = () => {
 		gotoSearch,
 	} = useContext(ContactsContext);
 
-	const { id } = verifiedUser;
-	console.log(id);
+	useEffect(() => {
+		getLoggedInUser();
+
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className='container p-1'>
@@ -37,15 +42,18 @@ const GroupList = () => {
 					/>
 				</div>
 
-				{userContacts.map((contact, index) => {
-					return (
-						<ul className='contactListBox' key={index}>
-							<Link to={`/chat/${contact.id}`} className='contactListLink'>
+				<ul className='contactListBox'>
+					{userContacts.map((contact, index) => {
+						return (
+							<Link
+								to={`/chat/${contact.id}`}
+								key={index}
+								className='contactListLink'>
 								<li> {contact.username}</li>
 							</Link>
-						</ul>
-					);
-				})}
+						);
+					})}
+				</ul>
 			</div>
 		</div>
 	);

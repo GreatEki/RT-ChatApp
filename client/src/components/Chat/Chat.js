@@ -9,10 +9,11 @@ import Input from '../Input/Input';
 import MessagesArea from '../MessagesArea/MessagesArea';
 
 import './chat.css';
+import AddAsContactModal from '../AddAsContactModal/AddAsContactModal';
 
 let socket;
 
-const Chat = () => {
+const Chat = (props) => {
 	const {
 		name,
 		room,
@@ -20,9 +21,24 @@ const Chat = () => {
 		setUserMsg,
 		chatMessages,
 		setChatMessages,
+		checkIfContact,
+		isContact,
+		getContactInfo,
 	} = useContext(GeneralContext);
 
-	// const { styles, seeChatList } = useContext(StyleContext);
+	const chatId = props.match.params.id;
+
+	useEffect(() => {
+		checkIfContact(chatId);
+		async function fetchContactInfo() {
+			await getContactInfo(chatId);
+			// console.log(contactInfo);
+		}
+
+		fetchContactInfo();
+
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isContact]);
 
 	//This useEffect() handles the general joining and disconnection of a user to and from a room
 	useEffect(() => {
@@ -66,6 +82,8 @@ const Chat = () => {
 					<div className='align-self-start w-100 infoContainer p-2'>
 						<InfoBar />
 					</div>
+
+					{!isContact ? <AddAsContactModal /> : <div> </div>}
 
 					<div className='chatBox w-100'>
 						<div>

@@ -13,6 +13,8 @@ const ContactsContextProvider = (props) => {
 
 	let history = useHistory();
 
+	//Method accepts value a searches for contacts
+	// Method is fired in the grouplist component and whenever the value changes
 	const searchForContacts = async (val) => {
 		try {
 			if (!val || val === '') {
@@ -29,6 +31,7 @@ const ContactsContextProvider = (props) => {
 		}
 	};
 
+	//Method sends user to the search page.
 	const gotoSearch = (e, val) => {
 		e.preventDefault();
 		history.push(`/search/contacts/${val}`);

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { server } from '../config/config';
 import Axios from 'axios';
@@ -22,9 +22,19 @@ const GeneralContextProvider = (props) => {
 	const [authMsgs, setAuthMsgs] = useState('');
 
 	const [userContacts, setUserContacts] = useState([]);
+	const [isContact, setIsContact] = useState(false);
+	const [modal, setModal] = useState(false);
+	const [foundContact, setFoundContact] = useState({});
 
 	const { ENDPOINT } = server;
 	let history = useHistory();
+
+	//This useEffect()  saves the logged in user to our Session Storage
+	useEffect(() => {
+		sessionStorage.setItem('loggedUser', JSON.stringify(verifiedUser));
+
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [verifiedUser]);
 
 	// handles the Login Input fields in Join Component
 	const handleInput = (e) => {
@@ -99,6 +109,55 @@ const GeneralContextProvider = (props) => {
 		}
 	};
 
+	//Methods gets the Logged In User and sets that user at the verifiedUser.
+	const getLoggedInUser = () => {
+		const sessionUser = sessionStorage.getItem('loggedUser');
+		setVerifiedUser(JSON.parse(sessionUser));
+	};
+
+	// Signs out the user from CHAT.
+	const signOutUser = () => {
+		sessionStorage.setItem('logggedUser', JSON.stringify({}));
+		history.push('/join');
+
+		window.location.reload(true);
+	};
+
+	//This methods checks if a chat user is a contact of the verifiedUser
+	const checkIfContact = (id) => {
+		userContacts.map((contact) => {
+			if (id === contact.id) {
+				setIsContact(true);
+				setModal(false);
+				// console.log(id);
+			} else {
+				setIsContact(false);
+				setModal(true);
+			}
+		});
+	};
+
+	const getContactInfo = async (id) => {
+		try {
+			const res = await Axios.get(`${ENDPOINT}/api/users/${id}`);
+
+			const { email, firstName, lastName, userName } = res.data.user;
+
+			const contact = {
+				firstName,
+				lastName,
+				userName,
+				email,
+			};
+
+			setFoundContact(contact);
+
+			return foundContact;
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
 	return (
 		<GeneralContext.Provider
 			value={{
@@ -116,6 +175,13 @@ const GeneralContextProvider = (props) => {
 				setChatMessages,
 				verifiedUser,
 				setRoom,
+				getLoggedInUser,
+				signOutUser,
+				checkIfContact,
+				isContact,
+				modal,
+				setModal,
+				getContactInfo,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>
