@@ -26,10 +26,9 @@ const GeneralContextProvider = (props) => {
 	const [modal, setModal] = useState(false);
 	const [foundContact, setFoundContact] = useState({
 		id: '',
-		firstName: '',
-		lastName: '',
-		userName: '',
-		email: '',
+		firstname: '',
+		lastname: '',
+		username: '',
 	});
 
 	const { ENDPOINT } = server;
@@ -41,6 +40,12 @@ const GeneralContextProvider = (props) => {
 
 		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [verifiedUser]);
+
+	useEffect(() => {
+		localStorage.setItem('contacts', JSON.stringify(userContacts));
+
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userContacts]);
 
 	// handles the Login Input fields in Join Component
 	const handleInput = (e) => {
@@ -121,6 +126,12 @@ const GeneralContextProvider = (props) => {
 		setVerifiedUser(JSON.parse(sessionUser));
 	};
 
+	//Method retrieves/loads the users contacts from localStorage
+	const loadUserContacts = () => {
+		const localContacts = localStorage.getItem('contacts');
+		setUserContacts(JSON.parse(localContacts));
+	};
+
 	// Signs out the user from CHAT.
 	const signOutUser = () => {
 		sessionStorage.setItem('logggedUser', JSON.stringify({}));
@@ -132,33 +143,38 @@ const GeneralContextProvider = (props) => {
 	//This methods checks if a chat user is a contact of the verifiedUser
 	const checkIfContact = (id) => {
 		try {
-			userContacts.map((contact) => {
-				if (id === contact.id) {
-					setIsContact(true);
-					setModal(false);
-					// console.log(id);
-				} else {
-					setIsContact(false);
-					setModal(true);
-				}
-			});
+			if (userContacts.length > 0) {
+				userContacts.map((contact) => {
+					if (id === contact.id) {
+						setIsContact(true);
+						setModal(false);
+						// console.log(id);
+					} else {
+						setIsContact(false);
+						setModal(true);
+					}
+				});
+			} else if (userContacts.length <= 0) {
+				setIsContact(false);
+				setModal(true);
+			}
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
+	// This method fetches the searched contacts details and saved it in the foundContact state variable
 	const getContactInfo = async (id) => {
 		try {
 			const res = await Axios.get(`${ENDPOINT}/api/users/${id}`);
 
-			const { _id, email, firstName, lastName, userName } = res.data.user;
+			const { _id, firstName, lastName, userName } = res.data.user;
 
 			const contact = {
 				id: _id,
-				firstName,
-				lastName,
-				userName,
-				email,
+				firstname: firstName,
+				lastname: lastName,
+				username: userName,
 			};
 
 			setFoundContact(contact);
@@ -167,6 +183,25 @@ const GeneralContextProvider = (props) => {
 		} catch (err) {
 			console.log(err.message);
 		}
+	};
+
+	//Method adds a new contact to the contact array of the user
+	const addNewContact = async (e, userId, contact) => {
+		e.preventDefault();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		const res = await Axios.post(
+			`${ENDPOINT}/api/users/contacts/${userId}`,
+			contact,
+			config
+		);
+
+		setModal(!modal);
 	};
 
 	return (
@@ -194,6 +229,8 @@ const GeneralContextProvider = (props) => {
 				setModal,
 				getContactInfo,
 				foundContact,
+				addNewContact,
+				loadUserContacts,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>

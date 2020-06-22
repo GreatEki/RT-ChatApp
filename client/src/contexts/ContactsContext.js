@@ -37,26 +37,9 @@ const ContactsContextProvider = (props) => {
 		history.push(`/search/contacts/${val}`);
 	};
 
-	const addNewContact = async (e, userId, contact) => {
-		e.preventDefault();
-
-		const config = {
-			headers: {
-				'Content-Type': 'application.json',
-			},
-		};
-
-		const res = await Axios.post(
-			`${ENDPOINT}/api/users/contacts/${userId}`,
-			contact,
-			config
-		);
-	};
-
 	return (
 		<ContactsContext.Provider
 			value={{
-				addNewContact,
 				searchForContacts,
 				setSearchVal,
 				gotoSearch,

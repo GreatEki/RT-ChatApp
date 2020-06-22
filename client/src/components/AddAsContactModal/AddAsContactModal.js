@@ -3,7 +3,13 @@ import { Modal, Button, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { GeneralContext } from '../../contexts/GeneralContext';
 
 const AddAsContactModal = (props) => {
-	const { modal, setModal, foundContact } = useContext(GeneralContext);
+	const {
+		modal,
+		setModal,
+		foundContact,
+		verifiedUser,
+		addNewContact,
+	} = useContext(GeneralContext);
 
 	const toggle = () => {
 		setModal(!modal);
@@ -14,12 +20,14 @@ const AddAsContactModal = (props) => {
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Add To Contact</ModalHeader>
 				<ModalBody>
-					Hi Ekene, {foundContact.userName} is not on your contact list. Would
-					you like to add {foundContact.userName} now?
+					Hi Ekene, This User is not on your contact list. Would you like to add{' '}
+					{foundContact.userName} now?
 				</ModalBody>
 				<ModalFooter>
-					<Button color='primary' onClick={toggle}>
-						Add to Lost
+					<Button
+						color='primary'
+						onClick={(e) => addNewContact(e, verifiedUser.id, foundContact)}>
+						Add to List
 					</Button>{' '}
 					<Button color='secondary' onClick={toggle}>
 						Not Now
