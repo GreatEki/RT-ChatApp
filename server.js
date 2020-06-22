@@ -44,6 +44,10 @@ app.use((req, res, next) => {
 app.use('/api/auth', require('./api/routes/authRoutes'));
 app.use('/api/users', require('./api/routes/userRoutes'));
 
+io.on('connect', (socket) => {
+	console.log('New Web socket Connection');
+});
+
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () =>

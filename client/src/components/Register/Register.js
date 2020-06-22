@@ -1,53 +1,79 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import './register.css';
+import { GeneralContext } from '../../contexts/GeneralContext';
 
 const Register = () => {
+	const { handleSignUpUserInput, newUser, signUpUser, authMsgs } = useContext(
+		GeneralContext
+	);
 	return (
 		<div className='container wrapper'>
 			<div className='registerBox v-center'>
 				<h5 className='logo text-center'>RT-CHAT</h5>
 				<div className='card h-center registerForm'>
 					<p className='text-center font-weight-bold'> Create Free Account. </p>
-					<form>
+
+					{authMsgs ? (
+						<p className='text-center text-success'> {authMsgs} </p>
+					) : (
+						<p> </p>
+					)}
+
+					<form onSubmit={(e) => signUpUser(e, newUser)}>
 						<div className='text-center '>
 							<input
 								type='text'
-								name='username'
+								name='firstName'
+								onChange={(e) => handleSignUpUserInput(e)}
+								value={newUser.firstName}
 								className='registerInput  rounded-0'
 								placeholder='Firstname'
+								required
 							/>
 						</div>
 						<div className='text-center '>
 							<input
 								type='text'
-								name='username'
+								name='lastName'
+								onChange={(e) => handleSignUpUserInput(e)}
+								value={newUser.lastName}
 								className='registerInput  rounded-0'
 								placeholder='Lastname'
+								required
 							/>
 						</div>
 						<div className='text-center '>
 							<input
-								type='text'
-								name='username'
+								type='email'
+								name='email'
+								onChange={(e) => handleSignUpUserInput(e)}
+								value={newUser.email}
 								className='registerInput  rounded-0'
 								placeholder='Email'
+								required
 							/>
 						</div>
 						<div className='text-center '>
 							<input
 								type='text'
-								name='username'
+								name='userName'
+								onChange={(e) => handleSignUpUserInput(e)}
+								value={newUser.userName}
 								className='registerInput  rounded-0'
 								placeholder='Preferred Username'
+								required
 							/>
 						</div>
 						<div className='text-center '>
 							<input
 								type='password'
-								name='username'
+								name='password'
+								onChange={(e) => handleSignUpUserInput(e)}
+								value={newUser.password}
 								className='registerInput  rounded-0'
 								placeholder='Password'
+								required
 							/>
 						</div>
 
@@ -55,6 +81,14 @@ const Register = () => {
 							{' '}
 							Create Account
 						</button>
+
+						<div className='text-center p-2'>
+							<small className='p-2'>
+								Already Have An Account?
+								<Link to='/join'> Sign In </Link>
+								Here.
+							</small>
+						</div>
 					</form>
 				</div>
 			</div>

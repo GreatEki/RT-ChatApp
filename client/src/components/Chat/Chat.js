@@ -49,7 +49,7 @@ const Chat = (props) => {
 
 			socket.off();
 		};
-	}, [name, room]);
+	}, []);
 
 	/* This useEffect() listens to message for the client*/
 	useEffect(() => {

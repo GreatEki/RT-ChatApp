@@ -6,6 +6,13 @@ import Axios from 'axios';
 export const GeneralContext = createContext();
 
 const GeneralContextProvider = (props) => {
+	const [newUser, setNewUser] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		userName: '',
+		password: '',
+	});
 	const [user, setUser] = useState({
 		userName: '',
 		password: '',
@@ -204,6 +211,35 @@ const GeneralContextProvider = (props) => {
 		setModal(!modal);
 	};
 
+	const handleSignUpUserInput = (e) => {
+		setNewUser({
+			...newUser,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const signUpUser = async (e, newUser) => {
+		e.preventDefault();
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		try {
+			const res = await Axios.post(
+				`${ENDPOINT}/api/auth/create-account`,
+				newUser,
+				config
+			);
+
+			setAuthMsgs(res.data.message);
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
 	return (
 		<GeneralContext.Provider
 			value={{
@@ -231,6 +267,10 @@ const GeneralContextProvider = (props) => {
 				foundContact,
 				addNewContact,
 				loadUserContacts,
+				handleSignUpUserInput,
+				newUser,
+				signUpUser,
+				authMsgs,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>
