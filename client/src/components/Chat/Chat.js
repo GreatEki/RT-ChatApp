@@ -15,8 +15,6 @@ let socket;
 
 const Chat = (props) => {
 	const {
-		name,
-		room,
 		userMsg,
 		setUserMsg,
 		chatMessages,
@@ -24,36 +22,32 @@ const Chat = (props) => {
 		checkIfContact,
 		isContact,
 		getContactInfo,
+		verifiedUser,
+		foundContact,
 	} = useContext(GeneralContext);
 
 	const chatId = props.match.params.id;
+	const myRoomId = verifiedUser.id;
+	// console.log(myRoomId);
 
+	// This useEffect() handles the general joining and disconnection of a user to and from a room
 	useEffect(() => {
 		checkIfContact(chatId);
 		getContactInfo(chatId);
 
-		//eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isContact]);
-
-	//This useEffect() handles the general joining and disconnection of a user to and from a room
-	useEffect(() => {
 		socket = io(server.ENDPOINT);
+		// console.log(chatId);
 
-		//this handles allowing a user to join a chat room
-		socket.emit('join', { name, room }, () => {});
+		socket.emit('joinUsers', { user: myRoomId }, () => {});
 
-		/* providing a return statement inside the useEffect() which
-            we use for unmouting or disconnecting the user */
-		return () => {
-			socket.emit('disconnect');
-
-			socket.off();
-		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	/* This useEffect() listens to message for the client*/
 	useEffect(() => {
 		socket.on('message', (message) => {
+			console.log(message);
+
 			setChatMessages([...chatMessages, message]);
 		});
 
@@ -64,8 +58,14 @@ const Chat = (props) => {
 		e.preventDefault();
 
 		if (userMsg) {
-			socket.emit('clientMessage', userMsg, () => setUserMsg(''));
+			socket.emit('clientMessage', {
+				userMsg: userMsg,
+				sender: verifiedUser.userName,
+				toContact: chatId,
+			});
 		}
+
+		setUserMsg('');
 	};
 
 	// console.log(userMsg, chatMessages);

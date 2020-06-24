@@ -44,8 +44,41 @@ app.use((req, res, next) => {
 app.use('/api/auth', require('./api/routes/authRoutes'));
 app.use('/api/users', require('./api/routes/userRoutes'));
 
-io.on('connect', (socket) => {
-	console.log('New Web socket Connection');
+const chatBot = 'chatBot';
+
+io.on('connection', (socket) => {
+	const people = {};
+	socket.on('joinUsers', ({ user }, callback) => {
+		console.log(user);
+
+		if (!user) {
+			callback = () => {
+				return {
+					error: 'Awaiting load parameters',
+				};
+			};
+		} else {
+			// const name = user;
+			// people[name] = socket.id;
+			socket.join(user);
+
+			socket.emit('message', {
+				sender: chatBot,
+				msgContent: `You are connected `,
+			});
+		}
+	});
+
+	socket.on('clientMessage', (message) => {
+		const { userMsg, sender, toContact } = message;
+		// const name = toContact;
+		// people[name] = socket.id;
+		// console.log(toContact);
+		io.to(toContact).emit('message', {
+			sender: sender,
+			msgContent: userMsg,
+		});
+	});
 });
 
 const PORT = process.env.PORT || 5000;

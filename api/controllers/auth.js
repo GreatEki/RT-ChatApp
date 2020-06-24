@@ -103,7 +103,7 @@ const addUser = async (req, res) => {
 
 			return res.status(201).json({
 				success: true,
-				message: 'User signup successful',
+				message: 'User signup successful, Proceed to Login',
 				user: savedUser,
 			});
 		}

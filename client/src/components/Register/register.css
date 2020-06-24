@@ -32,3 +32,9 @@
 	margin-top: 1.5em;
 	color: white;
 }
+
+@media (min-width: 100px) and (max-width: 575px) {
+	.siteBtn {
+		font-size: 14px;
+	}
+}

@@ -58,8 +58,6 @@ const addContact = async (req, res) => {
 		
  */
 
-		console.log(newContact);
-
 		const response = await User.findOneAndUpdate(
 			{ _id: currentUserId },
 			{ $push: { contacts: newContact } }

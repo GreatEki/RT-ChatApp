@@ -20,8 +20,8 @@ const AddAsContactModal = (props) => {
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Add To Contact</ModalHeader>
 				<ModalBody>
-					Hi Ekene, This User is not on your contact list. Would you like to add{' '}
-					{foundContact.userName} now?
+					Hi {verifiedUser.firstName}, This User is not on your contact list.
+					Would you like to add {foundContact.username} now?
 				</ModalBody>
 				<ModalFooter>
 					<Button

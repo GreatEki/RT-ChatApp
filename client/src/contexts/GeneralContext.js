@@ -17,7 +17,6 @@ const GeneralContextProvider = (props) => {
 		userName: '',
 		password: '',
 	});
-	const [room, setRoom] = useState('');
 
 	const [verifiedUser, setVerifiedUser] = useState({});
 
@@ -109,8 +108,9 @@ const GeneralContextProvider = (props) => {
 
 				setVerifiedUser({
 					id: userInfo._id,
-					firstName: userInfo.firstname,
+					firstName: userInfo.firstName,
 					lastName: userInfo.lastName,
+					userName: userInfo.userName,
 					email: userInfo.email,
 					token: res.data.token,
 				});
@@ -120,10 +120,12 @@ const GeneralContextProvider = (props) => {
 				history.push('/chat-list');
 			}
 		} catch (err) {
-			// console.log(err.response);
-			const errResp = err.response.data;
-
-			setAuthMsgs(errResp.message);
+			if (err.message === 'Network Error') {
+				setAuthMsgs(err.message);
+			} else {
+				const errResp = err.response.data;
+				setAuthMsgs(errResp.message);
+			}
 		}
 	};
 
@@ -155,11 +157,13 @@ const GeneralContextProvider = (props) => {
 					if (id === contact.id) {
 						setIsContact(true);
 						setModal(false);
+
 						// console.log(id);
 					} else {
 						setIsContact(false);
 						setModal(true);
 					}
+					return modal;
 				});
 			} else if (userContacts.length <= 0) {
 				setIsContact(false);
@@ -202,7 +206,7 @@ const GeneralContextProvider = (props) => {
 			},
 		};
 
-		const res = await Axios.post(
+		await Axios.post(
 			`${ENDPOINT}/api/users/contacts/${userId}`,
 			contact,
 			config
@@ -235,6 +239,18 @@ const GeneralContextProvider = (props) => {
 			);
 
 			setAuthMsgs(res.data.message);
+
+			setTimeout(() => {
+				setNewUser({
+					firstName: '',
+					lastName: '',
+					email: '',
+					userName: '',
+					password: '',
+				});
+
+				setAuthMsgs('');
+			}, 3000);
 		} catch (err) {
 			console.log(err.message);
 		}
@@ -243,7 +259,6 @@ const GeneralContextProvider = (props) => {
 	return (
 		<GeneralContext.Provider
 			value={{
-				room,
 				userMsg,
 				chatMessages,
 				user,
@@ -256,7 +271,6 @@ const GeneralContextProvider = (props) => {
 				setUserMsg,
 				setChatMessages,
 				verifiedUser,
-				setRoom,
 				getLoggedInUser,
 				signOutUser,
 				checkIfContact,
@@ -270,7 +284,6 @@ const GeneralContextProvider = (props) => {
 				handleSignUpUserInput,
 				newUser,
 				signUpUser,
-				authMsgs,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>

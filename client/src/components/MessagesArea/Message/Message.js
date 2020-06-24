@@ -3,36 +3,44 @@ import './message.css';
 import { GeneralContext } from '../../../contexts/GeneralContext';
 
 const Message = ({ message: { sender, msgContent } }) => {
-	const { name } = useContext(GeneralContext);
+	const { verifiedUser, foundContact } = useContext(GeneralContext);
+
+	// const { userName } = verifiedUser;
+	const currentUser = verifiedUser.userName;
+	const contactUser = foundContact.username;
 
 	let isSentByCurrentUser = false;
 
-	const userName = name.trim().toLowerCase();
+	// userName = userName.trim().toLowerCase();
+	// console.log(sender);
+	// console.log(userName);
 
-	if (sender === userName) {
-		isSentByCurrentUser = true;
+	if (sender === currentUser) {
+		// isSentByCurrentUser = true;
+		return (
+			<div className='messageContainer justifyEnd'>
+				<div className='userMessageBox d-flex justify-content-end'>
+					<p className='userText text-justify'> {msgContent} </p>
+				</div>
+			</div>
+		);
+	} else {
+		// isSentByCurrentUser = false;
+		return (
+			<div className='messageContainer justifyStart'>
+				<div className='groupUserMessageBox d-flex flex-column'>
+					<span className='groupUsersIcon'>
+						{' '}
+						<i className='fas fa-user '> </i> {sender}{' '}
+					</span>
+					<span className='groupUserText text-justify text-wrap '>
+						{' '}
+						{msgContent}{' '}
+					</span>
+				</div>
+			</div>
+		);
 	}
-
-	return isSentByCurrentUser ? (
-		<div className='messageContainer justifyEnd'>
-			<div className='userMessageBox d-flex justify-content-end'>
-				<p className='userText text-justify'> {msgContent} </p>
-			</div>
-		</div>
-	) : (
-		<div className='messageContainer justifyStart'>
-			<div className='groupUserMessageBox d-flex flex-column'>
-				<span className='groupUsersIcon'>
-					{' '}
-					<i className='fas fa-user '> </i> {sender}{' '}
-				</span>
-				<span className='groupUserText text-justify text-wrap '>
-					{' '}
-					{msgContent}{' '}
-				</span>
-			</div>
-		</div>
-	);
 };
 
 export default Message;

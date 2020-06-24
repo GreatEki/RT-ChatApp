@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-
+import { Link } from 'react-router-dom';
 import './join.css';
 import { GeneralContext } from '../../contexts/GeneralContext';
 
@@ -23,11 +23,7 @@ const Join = () => {
 				)}
 				<h1 className='text-center'> JOIN RT_CHAT </h1>
 
-				<p className='text-center'>
-					{' '}
-					Its easy and Free, Signup with your username and password and start
-					chatting
-				</p>
+				<p className='text-center'> Login to connect with your friends.</p>
 
 				<div className='text-center p-2 '>
 					<input
@@ -82,6 +78,14 @@ const Join = () => {
 					{' '}
 					Enter{' '}
 				</button>
+
+				<div className='text-center p-2'>
+					<p className='p-2'>
+						Already Have An Account?
+						<Link to='/register'> Join </Link>
+						Here.
+					</p>
+				</div>
 			</div>
 		</div>
 	);
