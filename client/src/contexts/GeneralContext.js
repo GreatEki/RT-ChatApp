@@ -19,6 +19,7 @@ const GeneralContextProvider = (props) => {
 	});
 
 	const [verifiedUser, setVerifiedUser] = useState({});
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 	const [userMsg, setUserMsg] = useState('');
 	const [chatMessages, setChatMessages] = useState([]);
@@ -43,9 +44,10 @@ const GeneralContextProvider = (props) => {
 	//This useEffect()  saves the logged in user to our Session Storage
 	useEffect(() => {
 		sessionStorage.setItem('loggedUser', JSON.stringify(verifiedUser));
+		sessionStorage.setItem('isAuth', isAuthenticated);
 
 		//eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [verifiedUser]);
+	}, [verifiedUser, isAuthenticated]);
 
 	useEffect(() => {
 		localStorage.setItem('contacts', JSON.stringify(userContacts));
@@ -117,15 +119,19 @@ const GeneralContextProvider = (props) => {
 
 				setUserContacts(userInfo.contacts);
 
+				setIsAuthenticated(true);
+
 				history.push('/chat-list');
 			}
 		} catch (err) {
-			if (err.message === 'Network Error') {
-				setAuthMsgs(err.message);
-			} else {
-				const errResp = err.response.data;
-				setAuthMsgs(errResp.message);
-			}
+			console.log(err.message);
+
+			// if (err.message === 'Network Error') {
+			// 	setAuthMsgs(err.message);
+			// } else {
+			// 	const errResp = err.response.data;
+			// 	setAuthMsgs(errResp.message);
+			// }
 		}
 	};
 
@@ -133,10 +139,14 @@ const GeneralContextProvider = (props) => {
 	const getLoggedInUser = () => {
 		const sessionUser = sessionStorage.getItem('loggedUser');
 		setVerifiedUser(JSON.parse(sessionUser));
+
+		const sessionAuth = sessionStorage.getItem('isAuth');
+		setIsAuthenticated(JSON.parse(sessionAuth));
+		return isAuthenticated;
 	};
 
 	//Method retrieves/loads the users contacts from localStorage
-	const loadUserContacts = () => {
+	const loadUsersContacts = async () => {
 		const localContacts = localStorage.getItem('contacts');
 		setUserContacts(JSON.parse(localContacts));
 	};
@@ -144,6 +154,7 @@ const GeneralContextProvider = (props) => {
 	// Signs out the user from CHAT.
 	const signOutUser = () => {
 		sessionStorage.setItem('logggedUser', JSON.stringify({}));
+		sessionStorage.setItem('isAuth', JSON.stringify(setIsAuthenticated(false)));
 		history.push('/join');
 
 		window.location.reload(true);
@@ -152,6 +163,7 @@ const GeneralContextProvider = (props) => {
 	//This methods checks if a chat user is a contact of the verifiedUser
 	const checkIfContact = (id) => {
 		try {
+			// loadUserContacts();
 			if (userContacts.length > 0) {
 				userContacts.map((contact) => {
 					if (id === contact.id) {
@@ -215,6 +227,7 @@ const GeneralContextProvider = (props) => {
 		setModal(!modal);
 	};
 
+	// Method handles the sign up user input fields in our Register Component
 	const handleSignUpUserInput = (e) => {
 		setNewUser({
 			...newUser,
@@ -222,6 +235,7 @@ const GeneralContextProvider = (props) => {
 		});
 	};
 
+	// Handles the Sign Up functionality in Register Component
 	const signUpUser = async (e, newUser) => {
 		e.preventDefault();
 
@@ -280,10 +294,11 @@ const GeneralContextProvider = (props) => {
 				getContactInfo,
 				foundContact,
 				addNewContact,
-				loadUserContacts,
+				loadUsersContacts,
 				handleSignUpUserInput,
 				newUser,
 				signUpUser,
+				isAuthenticated,
 			}}>
 			{props.children}
 		</GeneralContext.Provider>

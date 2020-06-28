@@ -7,14 +7,14 @@ import { ContactsContext } from '../../contexts/ContactsContext';
 import './grouplist.css';
 
 const GroupList = () => {
-	const { userContacts, getLoggedInUser, loadUserContacts } = useContext(
+	const { userContacts, getLoggedInUser, loadUsersContacts } = useContext(
 		GeneralContext
 	);
 	const { setSearchVal, searchVal, gotoSearch } = useContext(ContactsContext);
 
 	useEffect(() => {
 		getLoggedInUser();
-		loadUserContacts();
+		loadUsersContacts();
 
 		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

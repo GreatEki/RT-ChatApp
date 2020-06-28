@@ -3,20 +3,11 @@ import './message.css';
 import { GeneralContext } from '../../../contexts/GeneralContext';
 
 const Message = ({ message: { sender, msgContent } }) => {
-	const { verifiedUser, foundContact } = useContext(GeneralContext);
+	const { verifiedUser } = useContext(GeneralContext);
 
-	// const { userName } = verifiedUser;
 	const currentUser = verifiedUser.userName;
-	const contactUser = foundContact.username;
-
-	let isSentByCurrentUser = false;
-
-	// userName = userName.trim().toLowerCase();
-	// console.log(sender);
-	// console.log(userName);
 
 	if (sender === currentUser) {
-		// isSentByCurrentUser = true;
 		return (
 			<div className='messageContainer justifyEnd'>
 				<div className='userMessageBox d-flex justify-content-end'>
@@ -25,7 +16,6 @@ const Message = ({ message: { sender, msgContent } }) => {
 			</div>
 		);
 	} else {
-		// isSentByCurrentUser = false;
 		return (
 			<div className='messageContainer justifyStart'>
 				<div className='groupUserMessageBox d-flex flex-column'>

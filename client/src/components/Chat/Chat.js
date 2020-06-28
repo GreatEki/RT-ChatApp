@@ -24,29 +24,40 @@ const Chat = (props) => {
 		getContactInfo,
 		verifiedUser,
 		foundContact,
+		loadUsersContacts,
+		getLoggedInUser,
 	} = useContext(GeneralContext);
 
 	const chatId = props.match.params.id;
-	const myRoomId = verifiedUser.id;
-	// console.log(myRoomId);
+	const myId = verifiedUser.id;
 
 	// This useEffect() handles the general joining and disconnection of a user to and from a room
 	useEffect(() => {
-		checkIfContact(chatId);
+		getLoggedInUser();
 		getContactInfo(chatId);
+		loadUsersContacts();
+		checkIfContact(chatId);
 
 		socket = io(server.ENDPOINT);
 		// console.log(chatId);
 
-		socket.emit('joinUsers', { user: myRoomId }, () => {});
+		socket.emit('joinUsers', { user: myId }, ({ error }) => {
+			alert(error);
+		});
+
+		return () => {
+			socket.emit('end');
+
+			socket.off();
+		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [chatId]);
 
 	/* This useEffect() listens to message for the client*/
 	useEffect(() => {
 		socket.on('message', (message) => {
-			console.log(message);
+			// console.log(message);
 
 			setChatMessages([...chatMessages, message]);
 		});
@@ -61,6 +72,7 @@ const Chat = (props) => {
 			socket.emit('clientMessage', {
 				userMsg: userMsg,
 				sender: verifiedUser.userName,
+				senderRoom: myId,
 				toContact: chatId,
 			});
 		}

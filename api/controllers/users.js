@@ -114,9 +114,32 @@ const searchForcontacts = async (req, res) => {
 	}
 };
 
+const loadUsersContacts = async (req, res) => {
+	try {
+		const id = req.params.id;
+
+		const user = await User.findById({ _id: id });
+
+		const contacts = user.contacts;
+
+		return res.status(200).json({
+			success: true,
+			message: 'User contatcs loaded',
+			contacts,
+		});
+	} catch (err) {
+		return res.status(500).json({
+			success: false,
+			message: 'Server Error',
+			error: err.message,
+		});
+	}
+};
+
 module.exports = {
 	getUsers,
 	getUser,
 	addContact,
 	searchForcontacts,
+	loadUsersContacts,
 };

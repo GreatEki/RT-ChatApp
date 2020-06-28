@@ -47,22 +47,19 @@ app.use('/api/users', require('./api/routes/userRoutes'));
 const chatBot = 'chatBot';
 
 io.on('connection', (socket) => {
-	const people = {};
 	socket.on('joinUsers', ({ user }, callback) => {
-		console.log(user);
+		// console.log(user);
 
 		if (!user) {
-			callback = () => {
-				return {
-					error: 'Awaiting load parameters',
-				};
-			};
+			callback({
+				error: 'Awaiting load parameters',
+			});
 		} else {
 			// const name = user;
 			// people[name] = socket.id;
 			socket.join(user);
 
-			socket.emit('message', {
+			io.to(user).emit('message', {
 				sender: chatBot,
 				msgContent: `You are connected `,
 			});
@@ -70,14 +67,18 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('clientMessage', (message) => {
-		const { userMsg, sender, toContact } = message;
-		// const name = toContact;
-		// people[name] = socket.id;
-		// console.log(toContact);
-		io.to(toContact).emit('message', {
+		const { userMsg, sender, senderRoom, toContact } = message;
+
+		// io.to(senderRoom).emit('message', { sender: sender, msgContent: userMsg });
+		io.to(toContact).to(senderRoom).emit('message', {
 			sender: sender,
 			msgContent: userMsg,
 		});
+	});
+
+	socket.on('end', () => {
+		console.log(`User has disconnected`);
+		socket.disconnect();
 	});
 });
 
